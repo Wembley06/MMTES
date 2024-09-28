@@ -1,0 +1,76 @@
+class CaldeiraChocolate {
+    private static CaldeiraChocolate instancia = null;
+    private boolean vazia;
+    private boolean fervida;
+
+    private CaldeiraChocolate() {
+        this.vazia = true;
+        this.fervida = false;
+    }
+
+    public static CaldeiraChocolate getInstancia() {
+        if (instancia == null) {
+            instancia = new CaldeiraChocolate();
+        }
+        return instancia;
+    }
+
+    public void preencher() {
+        if (vazia) {
+            vazia = false;
+            fervida = false;
+            System.out.println("A caldeira foi preenchida com chocolate e leite.");
+        } else {
+            System.out.println("A caldeira ja esta cheia.");
+        }
+    }
+
+    public void ferver() {
+        if (!vazia && !fervida) {
+            fervida = true;
+            System.out.println("Mistura fervendo.");
+        } else if (vazia) {
+            System.out.println("A caldeira esta vazia, impossivel ferver.");
+        } else if (fervida) {
+            System.out.println("Mistura ja fervida.");
+        }
+    }
+
+    public void drenar() {
+        if (!vazia && fervida) {
+            vazia = true;
+            System.out.println("Mistura fervida drenada.");
+        } else if (vazia) {
+            System.out.println("Caldeira vazia, impossivel drenar.");
+        } else if (!fervida) {
+            System.out.println("Mistura nao foi fervida, impossivel drenar.");
+        }
+    }
+}
+
+class FabricaDeChocolate {
+    private CaldeiraChocolate caldeira;
+
+    public FabricaDeChocolate() {
+        this.caldeira = CaldeiraChocolate.getInstancia();
+    }
+
+    public void operar() {
+        caldeira.preencher();
+        caldeira.ferver();
+        caldeira.drenar();
+        caldeira.drenar();
+        caldeira.ferver();
+        caldeira.preencher();
+        caldeira.preencher();
+        caldeira.ferver();
+        caldeira.drenar();
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        FabricaDeChocolate fabrica = new FabricaDeChocolate();
+        fabrica.operar();
+    }
+}
